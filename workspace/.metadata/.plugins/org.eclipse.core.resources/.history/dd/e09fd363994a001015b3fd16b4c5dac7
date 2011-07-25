@@ -1,0 +1,393 @@
+package br.com.abacomm.agilejava.chess;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import br.com.abacomm.agilejava.chess.pieces.Piece;
+import br.com.abacomm.agilejava.chess.pieces.Piece.Color;
+import br.com.abacomm.agilejava.chess.util.StringUtil;
+
+/**
+ * Define a board to play chess. Contain all pieces. Format:<br/>
+ * pppppppp<br/>
+ * rnbqkbnr<br/>
+ * ........<br/>
+ * ........<br/>
+ * ........<br/>
+ * ........<br/>
+ * <b><br/>
+ * RNBQKBNR<br/>
+ * PPPPPPPP<br/>
+ * </b><br/>
+ * In this form, doesn't return '\n' after rank 7.
+ */
+public class Board {
+    private static int count = 0;
+
+    private String[][] rank = new String[8][8];
+
+    private List<Piece> blackRook = new ArrayList<Piece>(2);
+    private List<Piece> blackKnights = new ArrayList<Piece>(2);
+    private List<Piece> blackBishops = new ArrayList<Piece>(2);
+    private Piece blackQueen;
+    private Piece blackKing;
+    private List<Piece> blackPawns = new ArrayList<Piece>(8);
+
+    private List<Piece> whiteRook = new ArrayList<Piece>(2);
+    private List<Piece> whiteKnights = new ArrayList<Piece>(2);
+    private List<Piece> whiteBishops = new ArrayList<Piece>(2);
+    private Piece whiteQueen = Piece.create(Piece.Color.WHITE,
+	    Piece.Type.QUEEN.getRepresentation());
+    private Piece whiteKing = Piece.create(Piece.Color.WHITE,
+	    Piece.Type.KING.getRepresentation());
+    private ArrayList<Piece> whitePawns = new ArrayList<Piece>(8);
+
+    // TODO make sense to have these lists below?
+    // private List<Piece> whiteStrongestPiece = new ArrayList<Piece>();
+    // private List<Piece> blackStrongestPiece = new ArrayList<Piece>();
+
+    public Board() {
+	for (int i = 0; i < 8; i++) {
+	    for (int j = 0; j < 8; j++) {
+		rank[i][j] = StringUtil.BLANK;
+	    }
+	}
+    }
+
+    public void createPiecesAndInitializeBoard() {
+	createPieces();
+
+	initialize();
+
+	for (int i = 0; i < 32; i++)
+	    incrementCount();
+    }
+
+    /*
+     * TODO Estou com dificuldade em criar 2 contrutores para atender as
+     * necessidades de criar um novo board e inicializar ele. Nao precisa mais
+     * fazer nada ao criar... apenas precisa colocar os "." nos lugares (todos)
+     * corretos
+     */
+    public void createPieces() {
+	for (int i = 0; i < 2; i++) {
+	    blackRook.add(Piece.create(Piece.Color.BLACK,
+		    Piece.Type.ROOK.getRepresentation()));
+	    whiteRook.add(Piece.create(Piece.Color.WHITE,
+		    Piece.Type.ROOK.getRepresentation()));
+
+	    blackKnights.add(Piece.create(Piece.Color.BLACK,
+		    Piece.Type.KNIGHT.getRepresentation()));
+	    whiteKnights.add(Piece.create(Piece.Color.WHITE,
+		    Piece.Type.KNIGHT.getRepresentation()));
+
+	    blackBishops.add(Piece.create(Piece.Color.BLACK,
+		    Piece.Type.BISHOP.getRepresentation()));
+	    whiteBishops.add(Piece.create(Piece.Color.WHITE,
+		    Piece.Type.BISHOP.getRepresentation()));
+	}
+
+	blackQueen = Piece.create(Piece.Color.BLACK,
+		Piece.Type.QUEEN.getRepresentation());
+	whiteQueen = Piece.create(Piece.Color.WHITE,
+		Piece.Type.QUEEN.getRepresentation());
+
+	blackKing = Piece.create(Piece.Color.BLACK,
+		Piece.Type.KING.getRepresentation());
+	whiteKing = Piece.create(Piece.Color.WHITE,
+		Piece.Type.KING.getRepresentation());
+
+	for (int i = 0; i < 8; i++) {
+	    blackPawns.add(Piece.create(Piece.Color.BLACK,
+		    Piece.Type.PAWN.getRepresentation()));
+	    whitePawns.add(Piece.create(Piece.Color.WHITE,
+		    Piece.Type.PAWN.getRepresentation()));
+
+	}
+
+	for (int i = 0; i < 32; i++) {
+	    incrementCount();
+	}
+    }
+
+    public static Board createCleanBoard() {
+	return new Board();
+    }
+
+    public static int getCount() {
+	return Board.count;
+    }
+
+    public static void resetCount() {
+	count = 0;
+    }
+
+    public static void incrementCount() {
+	++count;
+    }
+
+    public int getNumberOfPieces(Piece.Color _color, Piece.Type _type) {
+	int numberOfPieces = 0;
+	Piece piece = null;
+
+	for (int i = 0; i < 8; i++)
+	    for (int j = 0; j < 8; j++) {
+		piece = getPiece(i, j);
+		if (piece != null && piece.getType() == _type
+			&& piece.getColor() == _color)
+		    numberOfPieces++;
+	    }
+	return numberOfPieces;
+    }
+
+    public int getNumberOfPieces() {
+	int numberOfPieces = 0;
+	Piece piece = null;
+
+	for (int i = 0; i < 8; i++)
+	    for (int j = 0; j < 8; j++) {
+		piece = getPiece(i, j);
+		if (piece != null)
+		    numberOfPieces++;
+	    }
+	return numberOfPieces;
+    }
+
+    public List<Piece> getAllPiecesSameColor(Color _color) {
+	List<Piece> pieces = new ArrayList<Piece>();
+	Piece piece = null;
+
+	for (int i = 0; i < 8; i++) {
+	    for (int j = 0; j < 8; j++) {
+		piece = getPiece(i, j);
+		if (piece != null && piece.getColor() == _color)
+		    pieces.add(piece);
+	    }
+	}
+
+	Collections.sort(pieces);
+	for (Piece p : pieces)
+	    System.out.println(p.toString());
+
+	return pieces;
+    }
+
+    /**
+     * Put all pieces on table. Of course, first need create the pieces.
+     */
+    public void initialize() {
+	rank[0][0] = blackRook.get(0).toString();
+	rank[0][1] = blackKnights.get(0).toString();
+	rank[0][2] = blackBishops.get(0).toString();
+	rank[0][3] = blackQueen.toString();
+	rank[0][4] = blackKing.toString();
+	rank[0][5] = blackBishops.get(1).toString();
+	rank[0][6] = blackKnights.get(1).toString();
+	rank[0][7] = blackRook.get(1).toString();
+
+	for (int i = 0; i < 8; i++)
+	    rank[1][i] = blackPawns.get(i).toString();
+
+	for (int i = 2; i < 6; i++)
+	    for (int j = 0; j < 8; j++)
+		rank[i][j] = StringUtil.BLANK;
+
+	for (int i = 0; i < 8; i++)
+	    rank[6][i] = whitePawns.get(i).toString();
+
+	rank[7][0] = whiteRook.get(0).toString();
+	rank[7][1] = whiteKnights.get(0).toString();
+	rank[7][2] = whiteBishops.get(0).toString();
+	rank[7][3] = whiteQueen.toString();
+	rank[7][4] = whiteKing.toString();
+	rank[7][5] = whiteBishops.get(1).toString();
+	rank[7][6] = whiteKnights.get(1).toString();
+	rank[7][7] = whiteRook.get(1).toString();
+    }
+
+    public void addPiece(int x, int y, Piece _piece) {
+	rank[x][y] = _piece.toString();
+
+	switch (_piece.getType()) {
+	case ROOK:
+	    if (_piece.getColor().equals(Piece.Color.BLACK))
+		blackBishops.add(_piece);
+	    else
+		whiteRook.add(_piece);
+	    break;
+	case KNIGHT:
+	    if (_piece.getColor().equals(Piece.Color.BLACK))
+		blackKnights.add(_piece);
+	    else
+		whiteKnights.add(_piece);
+	    break;
+	case BISHOP:
+	    if (_piece.getColor().equals(Piece.Color.BLACK))
+		blackBishops.add(_piece);
+	    else
+		whiteBishops.add(_piece);
+	    break;
+	case QUEEN:
+	    if (_piece.getColor().equals(Piece.Color.BLACK))
+		blackQueen = _piece;
+	    else
+		whiteQueen = _piece;
+	    break;
+	case KING:
+	    if (_piece.getColor().equals(Piece.Color.BLACK))
+		blackKing = _piece;
+	    else
+		whiteKing = _piece;
+	    break;
+	default: // by default or even if is a pawn.
+	    if (_piece.getColor().equals(Piece.Color.BLACK))
+		blackPawns.add(_piece);
+	    else
+		whitePawns.add(_piece);
+	}
+    }
+
+    public Piece getPiece(int x, int y) {
+	return rank[x][y] == StringUtil.BLANK ? null : Piece.create(rank[x][y]
+		.toUpperCase().equals(rank[x][y]) ? Piece.Color.BLACK
+		: Piece.Color.WHITE, rank[x][y]);
+    }
+
+    /**
+     * Evaluation of strength is pivotal.<br/>
+     * Queen - 9 points;<br/>
+     * Rook - 5 points;<br/>
+     * Bishop - 3;<br/>
+     * Knight - 2.5;<br/>
+     * Pawn - 0.5 (same file as a pawn of the same color) or 1 otherwise
+     */
+    public float evaluationOfStrength(Color _color) {
+	float pawnAdvanced = 0;
+	float pawnSameLine = 0;
+	int numberOfPawns = 0;
+	// TODO implement representation of piece, by color, using a map type
+	String blackPawnRepesentation = Piece.Type.PAWN.getRepresentation()
+		.toUpperCase();
+	String whitePawnRepesentation = Piece.Type.PAWN.getRepresentation();
+
+	for (int i = 0; i <= 7; i++) {
+	    numberOfPawns = 0;
+	    for (int j = 0; j <= 7; j++) {
+		if (_color == Piece.Color.BLACK) {
+		    if (rank[i][j].equals(blackPawnRepesentation))
+			numberOfPawns++;
+		} else {
+		    if (rank[i][j].equals(whitePawnRepesentation))
+			numberOfPawns++;
+		}
+	    }
+
+	    if (numberOfPawns > 1)
+		pawnSameLine += numberOfPawns;
+	    else
+		pawnAdvanced += numberOfPawns;
+	}
+
+	return (Piece.getMapStrength(Piece.Type.QUEEN) * getNumberOfPieces(
+		_color, Piece.Type.QUEEN))
+		+ (Piece.getMapStrength(Piece.Type.ROOK) * getNumberOfPieces(
+			_color, Piece.Type.ROOK))
+		+ (Piece.getMapStrength(Piece.Type.BISHOP) * getNumberOfPieces(
+			_color, Piece.Type.BISHOP))
+		+ (Piece.getMapStrength(Piece.Type.KNIGHT) * getNumberOfPieces(
+			_color, Piece.Type.KNIGHT))
+		+ (Piece.Type.PAWN_ADVANCED_STRENGTH * pawnAdvanced)
+		+ (Piece.Type.PAWN.getStrength() * pawnSameLine);
+    }
+
+    /**
+     * Implement all moves that all pieces can made.
+     * 
+     * @param _piece
+     *            a piece to be moved
+     * @param x
+     *            position x
+     * @param y
+     *            position y
+     * @return true, for successful movement.
+     */
+    public boolean movePiece(Piece _piece, int x, int y) {
+	boolean success = true;
+
+	// The piece is blocked?
+	if (pieceIsBlocked(_piece))
+	    return false;
+	// No?! Fine, The piece can make this movement (i.e. can go to that
+	// position - walk
+	// in 'L' [for knight] or one square [for king]
+	if(!_piece.canMakeAMove(_piece.getType(), int startX, int startY, x, y))
+	    return false;
+
+	// Yes! That's ok! You can move...
+
+	// there's is some piece in place?
+	if (rank[x][y].equals(Piece.Type.NO_PIECE.getRepresentation()))
+	    rank[x][y] = _piece.getRepresentation();
+	else
+	    capture(_piece);
+	// yes! You capture that piece. Otherwise, do nothing ;)
+	return success;
+    }
+
+    /**
+     * Define if a piece is blocked or not.
+     * 
+     * @param _piece
+     *            a piece to be evaluated.
+     * @return true if blocked, otherwise false.
+     */
+    public boolean pieceIsBlocked(Piece _piece) {
+	return false;
+    }
+
+    /**
+     * Capture one piece.
+     * 
+     * @param _piece
+     *            a piece to be captured.
+     */
+    public void capture(Piece _piece) {
+
+    }
+
+    /**
+     * Just call getCount() method. Still here for <b>*compatibility*</b> (with
+     * book) purpose only!
+     */
+    public int pieceCount() {
+	return Board.getCount();
+    }
+
+    /**
+     * Just call toString method. Still here for <b>*compatibility*</b> (with
+     * book) purpose only!
+     * 
+     * @return this.toString();
+     */
+    public String print() {
+	return this.toString();
+    }
+
+    public String[][] getRank() {
+	return rank;
+    }
+
+    @Override
+    public String toString() {
+	StringBuilder buffer = new StringBuilder();
+	for (int i = 0; i < 8; i++) {
+	    for (int j = 0; j < 8; j++) {
+		buffer.append(rank[i][j]);
+		if (j == 7 && i != 7)
+		    buffer.append(StringUtil.NEWLINE);
+	    }
+	}
+	return buffer.toString();
+    }
+}

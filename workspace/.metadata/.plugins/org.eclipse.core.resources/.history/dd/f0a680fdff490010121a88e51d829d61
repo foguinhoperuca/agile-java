@@ -1,0 +1,12 @@
+package sis.summer;
+
+import sis.studentinfo.CourseSession;
+
+public class SummerCourseSession extends CourseSession {
+
+    public SummerCourseSession(String _department, String _number) {
+	super(_department, _number);
+	// TODO Auto-generated constructor stub
+    }
+
+}

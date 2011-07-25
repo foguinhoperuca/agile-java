@@ -1,0 +1,35 @@
+package sis.summer;
+
+import java.util.Date;
+
+import sis.studentinfo.Session;
+
+public class SummerCourseSession extends Session {
+    public static SummerCourseSession create(String _department,
+	    String _number, Date _startDate) {
+	return new SummerCourseSession(_department, _number, _startDate);
+    }
+
+    public SummerCourseSession(String _department, String _number,
+	    Date _startDate) {
+	super(_department, _number, _startDate);
+    }
+
+//    @Override
+//    public Date getEndDate(){
+//	GregorianCalendar calendar = new GregorianCalendar();
+//	int daysInWeek = 7;
+//	int dayFromFridayToMonday = 3;
+//	
+//	int numberOfDays = getSessionLength() * daysInWeek - dayFromFridayToMonday;
+//
+//	calendar.setTime(getStartDate());
+//	calendar.add(Calendar.DAY_OF_YEAR, numberOfDays);
+//	return calendar.getTime();
+//    }
+
+    @Override
+    protected int getSessionLength(){
+	return 8;
+    }
+}

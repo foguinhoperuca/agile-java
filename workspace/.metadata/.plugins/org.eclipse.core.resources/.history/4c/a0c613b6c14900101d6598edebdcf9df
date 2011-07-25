@@ -1,0 +1,19 @@
+package sis.studentinfo;
+
+import junit.framework.TestCase;
+
+import org.junit.Test;
+
+public class HonorGradingStrategyTest extends TestCase {
+
+    @Test
+    public void testGetGradePointsForGrade() {
+	HonorGradingStrategy strategy = new HonorGradingStrategy();
+	assertEquals(5, strategy.getGradePointsFor(Student.Grade.A));
+	assertEquals(4, strategy.getGradePointsFor(Student.Grade.B));
+	assertEquals(3, strategy.getGradePointsFor(Student.Grade.C));
+	assertEquals(2, strategy.getGradePointsFor(Student.Grade.D));
+	assertEquals(1, strategy.getGradePointsFor(Student.Grade.F));
+    }
+
+}

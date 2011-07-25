@@ -1,0 +1,30 @@
+package sis.summer;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
+import sis.studentinfo.CourseSession;
+
+public class SummerCourseSession extends CourseSession {
+    public static SummerCourseSession create(String _department,
+	    String _number, Date _startDate) {
+	return new SummerCourseSession(_department, _number, _startDate);
+    }
+
+    public SummerCourseSession(String _department, String _number,
+	    Date _startDate) {
+	super(_department, _number, _startDate);
+    }
+
+    public Date getEndDate(){
+	GregorianCalendar calendar = new GregorianCalendar();
+	calendar.setTime(getStartDate());
+	int sessionLength = 8;
+	int daysInWeek = 7;
+	int dayFromFridayToMonday = 3;
+	int numberOfDays = sessionLength * daysInWeek - dayFromFridayToMonday;
+	calendar.add(Calendar.DAY_OF_YEAR, numberOfDays);
+	return calendar.getTime();
+    }
+}

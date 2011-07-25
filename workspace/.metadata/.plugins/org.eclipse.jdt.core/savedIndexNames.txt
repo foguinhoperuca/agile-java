@@ -1,0 +1,15 @@
+INDEX VERSION 1.126+/home/jefferson/universal/projects/abacomm/agile_java/code/workspace/.metadata/.plugins/org.eclipse.jdt.core
+1517764967.index
+1887099579.index
+3299323074.index
+3650823491.index
+415787753.index
+2237435885.index
+3305761148.index
+26122835.index
+477996539.index
+3927879410.index
+637265997.index
+1530595630.index
+3046504114.index
+1458572480.index

@@ -1,0 +1,14 @@
+package sis.studentinfo;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class BasicGradingStyrategyTest {
+
+    @Test
+    public void testGetGradePointsFor() {
+	fail("Not yet implemented");
+    }
+
+}

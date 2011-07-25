@@ -1,0 +1,10 @@
+package sis.studentinfo;
+
+import sis.studentinfo.Student.Grade;
+
+public class RegularGradingStrategy extends BasicGradingStrategy {
+    @Override
+    public int getGradePointsFor(Grade _grade) {
+	return super.basicGradePointsFor(_grade);
+    }
+}

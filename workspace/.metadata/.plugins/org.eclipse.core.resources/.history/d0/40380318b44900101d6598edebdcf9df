@@ -1,0 +1,9 @@
+package sis.report;
+
+public class ReportCard {
+    static final String A_MESSAGE = "Excelent";
+    static final String B_MESSAGE = "Very Good";
+    static final String C_MESSAGE = "Average";
+    static final String D_MESSAGE = "You're not trying";
+    static final String F_MESSAGE = "Loser badass";
+}

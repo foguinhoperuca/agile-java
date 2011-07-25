@@ -1,0 +1,23 @@
+package sis;
+
+import br.com.abacomm.agilejava.chess.BoardTest;
+import br.com.abacomm.agilejava.chess.pieces.AllTests;
+import br.com.abacomm.agilejava.chess.pieces.PieceTest;
+import sis.report.RosterReporterTest;
+import sis.studentinfo.CourseSessionTest;
+import sis.studentinfo.DateUtilTest;
+import sis.studentinfo.StudentTest;
+import junit.framework.TestSuite;
+
+public class AllTests {
+    public static TestSuite suite() {
+	TestSuite suite = new TestSuite(AllTests.class.getName());
+	// $JUnit-BEGIN$
+	suite.addTestSuite(StudentTest.class);
+	suite.addTestSuite(CourseSessionTest.class);
+	suite.addTestSuite(RosterReporterTest.class);
+	suite.addTestSuite(DateUtilTest.class);
+	// $JUnit-END$
+	return suite;
+    }
+}

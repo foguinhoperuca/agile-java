@@ -1,0 +1,33 @@
+package sis.studentinfo;
+
+import sis.studentinfo.Student.Grade;
+
+public class RegularGradingStrategy implements GradingStrategy {
+
+    @Override
+    public int getGradePointsFor(Grade _grade) {
+	switch (_grade) {
+	case A:
+	    return 4;
+	case B:
+	    return 3;
+	case C:
+	    return 2;
+	case D:
+	    return 1;
+	case F:
+	default:
+	    return 0;
+	}
+	// if (_grade == Student.Grade.A)
+	// return 4;
+	// if (_grade == Student.Grade.B)
+	// return 3;
+	// if (_grade == Student.Grade.C)
+	// return 2;
+	// if (_grade == Student.Grade.D)
+	// return 1;
+	// return 0;
+    }
+
+}

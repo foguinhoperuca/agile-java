@@ -1,0 +1,21 @@
+= Chapter 05.
+
+== Collections.sort() & Interfaces.
+Explica um pouco sobre interfaces e como utilizalas para desacoplar o seu código.
+Comenta também sobre uma técnica chamada "mocking" (sem muitos detalhes ainda).
+=== Na prática.
+Um exemplo implementado em um projeto da Abacomm foi no avon transportes - ordenar lista de transportadoras.
+
+== Float & Double.
+Nesta parte é explicada a representação dos valores na forma literal (usando sufixo F, f, D, d) sendo que double é assumido quando não há nenhum sufixo.
+Também comenta a respeito da classe BigDecimal para representar números com a parte decimal.
+=== Na prática.
+BigDecimal já foi usado no avon transportes para corrigir a precisão de alguns relatórios.
+
+== Enum.
+É mostrado um exemplo bem simples de um enum para controlar as notas (grades).
+=== Na prática.
+NO avon transportes é utilizado uma forma mais completa dos enums.
+
+== Strategy
+Ensina a implementar esse design pattern.

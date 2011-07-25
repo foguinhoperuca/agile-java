@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Extract local variable &apos;piece&apos; from expression &apos;getPiece(i,j)&apos;&#x0A;- Original project: &apos;Chess&apos;&#x0A;- Variable name: &apos;piece&apos;&#x0A;- Destination method: &apos;br.com.abacomm.agilejava.chess.Board.getNumberOfPieces()&apos;&#x0A;- Variable expression: &apos;getPiece(i,j)&apos;&#x0A;- Replace occurrences of expression with variable" description="Extract local variable &apos;piece&apos;" final="false" id="org.eclipse.jdt.ui.extract.temp" input="/src&lt;br.com.abacomm.agilejava.chess{Board.java" name="piece" replace="true" selection="4544 14" stamp="1298853521140" version="1.0"/>
+</session>

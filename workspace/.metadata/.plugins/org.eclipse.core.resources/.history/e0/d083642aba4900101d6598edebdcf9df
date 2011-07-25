@@ -1,0 +1,17 @@
+package sis;
+
+import sis.report.RosterReporterTest;
+import sis.studentinfo.CourseSessionTest;
+import sis.studentinfo.DateUtilTest;
+import sis.studentinfo.StudentTest;
+import junit.framework.TestSuite;
+
+public class AllTests {
+    public static TestSuite suite() {
+	suite.addTestSuite(StudentTest.class);
+	suite.addTestSuite(CourseSessionTest.class);
+	suite.addTestSuite(RosterReporterTest.class);
+	suite.addTestSuite(DateUtilTest.class);
+	return suite;
+    }
+}

@@ -1,0 +1,9 @@
+package br.com.abacomm.agilejava.chess.pieces;
+
+public class Queen extends Piece {
+
+    public Queen(Color _color, String _name) {
+	super(_color, _name);
+    }
+
+}

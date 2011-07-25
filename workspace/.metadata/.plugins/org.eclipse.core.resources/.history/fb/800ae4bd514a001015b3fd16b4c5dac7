@@ -1,0 +1,20 @@
+package sis.studentinfo;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+public abstract class Session implements Comparable<CourseSession> {
+    private static int count;
+    private String department;
+    private String number;
+    private List<Student> students = new ArrayList<Student>();
+    private Date startDate;
+    private int numberOfCredits;
+
+    protected Session(String _department, String _number, Date _startDate) {
+	this.department = _department;
+	this.number = _number;
+	this.setStartDate(_startDate);
+    }
+}

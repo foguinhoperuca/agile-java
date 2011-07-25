@@ -1,0 +1,83 @@
+package br.com.abacomm.agilejava.chess.pieces;
+
+import junit.framework.TestCase;
+import br.com.abacomm.agilejava.chess.Board;
+
+public class PieceTest extends TestCase {
+	private Board board;
+	private Piece whitePawn;
+	private Piece blackPawn;
+
+	@Override
+	public void setUp() {
+		board = new Board();
+		whitePawn = Piece.create(Piece.Color.WHITE, Piece.Type.PAWN.getRepresentation());
+		blackPawn = Piece.create(Piece.Color.BLACK, Piece.Type.PAWN.getRepresentation());
+	}
+
+	public void testCreate() {
+		System.out.println(".....::::: Testing creating a piece :::::.....");
+
+		// Piece firstPawn = Piece.create(Piece.Color.WHITE,
+		// Piece.PAWN_REPRESENTATION);
+		// assertEquals(Piece.Color.WHITE, firstPawn.getColor());
+		//
+		// Piece secondPawn = Piece.create(Piece.Color.BLACK,
+		// Piece.PAWN_REPRESENTATION);
+		// assertEquals(Piece.Color.BLACK, secondPawn.getColor());
+
+		verifyCreation(Piece.createWhiteRook(), Piece.createBlackRook(), Piece.Type.ROOK, Piece.Type.ROOK.getRepresentation());
+		verifyCreation(Piece.createWhiteKnight(), Piece.createBlackKnight(), Piece.Type.KNIGHT, Piece.Type.KNIGHTgetRepresentation());
+		verifyCreation(Piece.createWhiteBishop(), Piece.createBlackBishop(), Piece.Type.BISHOP, Piece.BISHOP_REPRESENTATION);
+		verifyCreation(Piece.createWhiteQueen(), Piece.createBlackQueen(), Piece.Type.QUEEN, Piece.QUEEN_REPRESENTATION);
+		verifyCreation(Piece.createWhiteKing(), Piece.createBlackKing(), Piece.Type.KING, Piece.KING_REPRESENTATION);
+		verifyCreation(Piece.createWhitePawn(), Piece.createBlackPawn(), Piece.Type.PAWN, Piece.PAWN_REPRESENTATION);
+
+		Piece blank = Piece.noPiece();
+		assertEquals(".", blank.getRepresentation());
+		assertEquals(Piece.Type.NO_PIECE, blank.getType());
+		
+		System.out.println("Done. Test creating a piece was successfull!");
+	}
+
+	private void verifyCreation(Piece _whitePiece, Piece _blackPiece, Piece.Type type, String representation) {
+		assertTrue(_whitePiece.isWhite());
+		assertEquals(type, _whitePiece.getType());
+		assertEquals(representation, _whitePiece.getRepresentation());
+
+//		assertTrue(_blackPiece.isWhite()); // make sense?
+		assertTrue(_blackPiece.isBlack());
+		assertEquals(type, _blackPiece.getType());
+		assertEquals(representation, _blackPiece.getRepresentation());
+	}
+
+	public void testAddBoard() {
+		System.out.println(".....::::: Adding pawns to board :::::.....");
+
+		board.addPiece(2, 2, whitePawn);
+		assertEquals(board.getPiece(2, 2), whitePawn);
+		board.addPiece(5, 5, blackPawn);
+		assertEquals(board.getPiece(5, 5), blackPawn);
+
+		System.out.println("Done. Test adding pawns to board was successfull!");
+	}
+
+	public void testPrintableRepresentation() {
+		System.out.println(".....::::: Testing toString :::::.....");
+
+		assertEquals("P", blackPawn.toString());
+		assertEquals("p", whitePawn.toString());
+
+		System.out.println("Done. Test toString was successfull!");
+	}
+
+	public void testColor() {
+		System.out
+				.println(".....::::: Testing color - is white and is black :::::.....");
+
+		assertTrue(whitePawn.isWhite());
+		assertTrue(blackPawn.isBlack());
+
+		System.out.println("Done. Test color was successfull!");
+	}
+}

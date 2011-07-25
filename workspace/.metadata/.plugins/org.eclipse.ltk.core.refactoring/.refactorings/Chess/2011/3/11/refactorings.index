@@ -1,0 +1,5 @@
+1299509226136	Rename local variable 'blackRook'
+1299682510071	Rename field 'PAWN_STRENGTH'
+1299696834074	Move field
+1299696848185	Encapsulate field 'strength'
+1299698166498	Encapsulate field 'representation'

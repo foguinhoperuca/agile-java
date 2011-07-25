@@ -1,0 +1,27 @@
+package sis.studentinfo;
+
+import sis.studentinfo.Student.Grade;
+
+public class HonorsGradingStrategy implements GradingStrategy {
+
+    @Override
+    public int getGradePointsFor(Grade _grade) {
+	int points = basicGradePointsFor(_grade);
+	if (points > 0)
+	    points += 1;
+	return points;
+    }
+
+    private int basicGradePointsFor(Grade _grade) {
+	if (_grade == Student.Grade.A)
+	    return 4;
+	if (_grade == Student.Grade.B)
+	    return 3;
+	if (_grade == Student.Grade.C)
+	    return 2;
+	if (_grade == Student.Grade.D)
+	    return 1;
+	return 0;
+    }
+
+}

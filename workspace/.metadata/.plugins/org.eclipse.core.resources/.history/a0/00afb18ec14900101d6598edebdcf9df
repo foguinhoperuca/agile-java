@@ -1,0 +1,15 @@
+package sis.studentinfo;
+
+import static org.junit.Assert.fail;
+import junit.framework.TestCase;
+
+import org.junit.Test;
+
+public class HonorGradingStrategyTest extends TestCase {
+
+    @Test
+    public void testGetGradePointsForGrade() {
+	fail("Not yet implemented");
+    }
+
+}

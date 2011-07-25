@@ -1,0 +1,103 @@
+package sis.studentinfo;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
+
+public abstract class Session implements Comparable<CourseSession> {
+    private String department;
+    private String number;
+    private List<Student> students = new ArrayList<Student>();
+    private Date startDate;
+    private int numberOfCredits;
+
+    protected Session(String _department, String _number, Date _startDate) {
+	this.department = _department;
+	this.number = _number;
+	this.setStartDate(_startDate);
+    }
+
+    public int compareTo(CourseSession that) {
+	/*
+	 * My first implementation:
+	 * 
+	 * if (this.getDepartment().equals(that.getDepartment()))
+	 * 
+	 * return this.getNumber().compareTo(that.getNumber());
+	 * 
+	 * else
+	 * 
+	 * return this.getDepartment().compareTo(that.getDepartment());
+	 */
+
+	// Book implementation
+	int compare = this.getDepartment().compareTo(that.getDepartment());
+	if (compare != 0)
+	    return compare;
+
+	return this.getNumber().compareTo(that.getNumber());
+    }
+
+    public List<Student> getAllStudents() {
+	return this.students;
+    }
+
+    public Student get(int index) {
+	return students.get(index);
+    }
+
+    public String getDepartment() {
+	return this.department;
+    }
+
+    public String getNumber() {
+	return number;
+    }
+
+    public int getNumberOfStudents() {
+	return students.size();
+    }
+
+    public void setNumberOfCredits(int numberOfCredits) {
+	this.numberOfCredits = numberOfCredits;
+    }
+
+    public void enroll(Student _student) {
+	_student.addCredit(numberOfCredits);
+	students.add(_student);
+    }
+
+    public void setStartDate(Date startDate) {
+	this.startDate = startDate;
+    }
+
+    public Date getStartDate() {
+	return startDate;
+    }
+
+    /**
+     * Calculates the end date of session.
+     * 
+     * @return the end date of the current session.
+     */
+    public Date getEndDate() {
+	final int daysInWeek = 7;
+	final int daysFromFridayToMonday = 3;
+
+	GregorianCalendar calendar = new GregorianCalendar();
+	calendar.setTime(getStartDate());
+	int numberOfDays = getSessionLength() * daysInWeek
+		- daysFromFridayToMonday;
+	calendar.add(Calendar.DAY_OF_YEAR, numberOfDays);
+	return calendar.getTime();
+    }
+
+    abstract protected int getSessionLength();
+
+    public static CourseSession create(String _department, String _number,
+	    Date _startDate) {
+	return new CourseSession(_department, _number, _startDate);
+    }
+}

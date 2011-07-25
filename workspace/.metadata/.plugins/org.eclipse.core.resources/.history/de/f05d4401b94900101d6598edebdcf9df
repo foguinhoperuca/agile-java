@@ -1,0 +1,15 @@
+package sis.studentinfo;
+
+import sis.studentinfo.Student.Grade;
+
+public class HonorsGradingStrategy extends BasicGradingStrategy implements
+	GradingStrategy {
+
+    @Override
+    public int getGradePointsFor(Grade _grade) {
+	int points = super.basicGradePointsFor(_grade);
+	if (points > 0)
+	    points += 1;
+	return points;
+    }
+}

@@ -1,0 +1,134 @@
+package sis.studentinfo;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
+
+/**
+ * Provides a representation of a single-semester session of a specific
+ * university couse.
+ * 
+ */
+public class CourseSession extends Session implements Comparable<CourseSession> {
+    private static int count;
+    private String department;
+    private String number;
+    private List<Student> students = new ArrayList<Student>();
+    private Date startDate;
+    private int numberOfCredits;
+
+    /**
+     * Old method. Is here for historical reasons only!
+     * 
+     * @param _department
+     * @param _number
+     */
+    // public CourseSession(String _department, String _number) {
+    // this.department = _department;
+    // this.number = _number;
+    // CourseSession.incrementCount();
+    // }
+
+    protected CourseSession(String _department, String _number, Date _startDate) {
+	this.department = _department;
+	this.number = _number;
+	this.setStartDate(_startDate);
+    }
+
+    public static CourseSession create(String department, String number,
+	    Date startDate) {
+	incrementCount();
+	return new CourseSession(department, number, startDate);
+    }
+
+    public static int getCount() {
+	return CourseSession.count;
+    }
+
+    public static void resetCount() {
+	count = 0;
+    }
+
+    public static void incrementCount() {
+	++count;
+    }
+
+    public void enroll(Student _student) {
+	_student.addCredit(numberOfCredits);
+	students.add(_student);
+    }
+
+    public List<Student> getAllStudents() {
+	return this.students;
+    }
+
+    public Student get(int index) {
+	return students.get(index);
+    }
+
+    public String getDepartment() {
+	return this.department;
+    }
+
+    public String getNumber() {
+	return number;
+    }
+
+    public int getNumberOfStudents() {
+	return students.size();
+    }
+
+    public void setNumberOfCredits(int numberOfCredits) {
+	this.numberOfCredits = numberOfCredits;
+    }
+
+    /**
+     * Calculates the end date of session.
+     * 
+     * @return the end date of the current session.
+     */
+    public Date getEndDate() {
+	final int daysInWeek = 7;
+	final int daysFromFridayToMonday = 3;
+
+	GregorianCalendar calendar = new GregorianCalendar();
+	calendar.setTime(getStartDate());
+	int numberOfDays = getSessionLength() * daysInWeek
+		- daysFromFridayToMonday;
+	calendar.add(Calendar.DAY_OF_YEAR, numberOfDays);
+	return calendar.getTime();
+    }
+
+    public int compareTo(CourseSession that) {
+	/*
+	 * My first implementation:
+	 * 
+	 * 
+	 * if (this.getDepartment().equals(that.getDepartment())) return
+	 * this.getNumber().compareTo(that.getNumber()); else return
+	 * this.getDepartment().compareTo(that.getDepartment());
+	 */
+	/*
+	 * Book implementation
+	 */
+	int compare = this.getDepartment().compareTo(that.getDepartment());
+	if (compare != 0)
+	    return compare;
+
+	return this.getNumber().compareTo(that.getNumber());
+    }
+
+    protected int getSessionLength() {
+	return 16;
+    }
+
+    public void setStartDate(Date startDate) {
+	this.startDate = startDate;
+    }
+
+    public Date getStartDate() {
+	return startDate;
+    }
+}

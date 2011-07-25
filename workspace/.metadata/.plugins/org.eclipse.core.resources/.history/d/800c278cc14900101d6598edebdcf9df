@@ -1,0 +1,14 @@
+package sis.studentinfo;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class HonorGradingStrategyTest {
+
+    @Test
+    public void testGetGradePointsForGrade() {
+	fail("Not yet implemented"); // TODO
+    }
+
+}

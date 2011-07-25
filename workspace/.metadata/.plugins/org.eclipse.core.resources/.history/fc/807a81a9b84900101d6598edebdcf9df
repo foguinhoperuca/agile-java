@@ -1,0 +1,21 @@
+package sis.studentinfo;
+
+import sis.studentinfo.Student.Grade;
+
+abstract public class BasicGradingStrategy impĺements GradingStrategy{
+    protected int basicGradePointsFor(Grade _grade) {
+	switch (_grade) {
+	case A:
+	    return 4;
+	case B:
+	    return 3;
+	case C:
+	    return 2;
+	case D:
+	    return 1;
+	case F:
+	default:
+	    return 0;
+	}
+    }
+}

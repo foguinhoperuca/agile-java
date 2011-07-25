@@ -1,0 +1,35 @@
+== README.
+Este arquivo contem algumas anotações do livro agile java.
+Neste repositório, contém alguns projetos utilizados durante o estudo do livro.
+
+== Ambiente Utilizado.
+Durante o estudo, recomendo que tenha instalado:
+  * GIT;
+  * Eclipse;
+  * Apache ANT;
+  * JUnit 3.8+;
+  * Emacs, vi ou outro editor de texto instalado (eu utilizo o emacs e se estou no terminal, uso o vi)
+  * Yakuake (fica mais fácil pra estudar, visto que ele se "esconde" sozinho)
+
+== Material de estudo
+Basicamente o livro Agile Java: Crafting Code With Test Driven Development e internet (64.233.169.104).
+Recomendo utilizar, também, algumas aulas do MIT:
+lecture 11 - http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-00-introduction-to-computer-science-and-programming-fall-2008/video-lectures/lecture-11
+lecture 12 - http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-00-introduction-to-computer-science-and-programming-fall-2008/video-lectures/lecture-12
+
+== Problema para compilar por linha de comando.
+Interessante notar que eu preciso configurar corretamente as variaveis de ambiente do java, se nao vai utilizar o open jdk pra compilar.
+Na hora de executar, é necessário estar na pasta raiz do pacote do projeto e passar o caminho completo pra rodar.
+
+== Comandos usados.
+Inicialmente recomendo estar no diretorio workspace/<YOU-PROJECT>/src (assumindo que você está usando o eclipse para estudar).
+
+=== Compilando.
+javac -classpath /home/jefferson/universal/projects/lib/junit/junit4.8.2/junit-4.8.2.jar *.java 
+
+=== Executando.
+java -cp .:/home/jefferson/universal/projects/lib/junit/junit4.8.2/junit-4.8.2.jar junit.textui.TestRunner StudentTest
+
+== General.
+É bom salientar que o estilo de desenvolvimento adotado no livro utiliza baby-steps e conforme a código vai aumentando ou os requisitos são adicionados, o código é refatorado.
+Por isso, sempre os testes são escritos *ANTES* do código em si.

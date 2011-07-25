@@ -1,0 +1,13 @@
+package sis.summer;
+
+import sis.studentinfo.DateUtil;
+import junit.framework.TestCase;
+
+public class SummerCourseSessionTest extends TestCase {
+    @Test
+    public void testEndDate(){
+	Date startDate = DateUtil.createDate(2003, 6, 9);
+	CourseSession session = SummerCourseSession.create("ENGL", "200", startDate);
+	
+    }
+}

@@ -1,0 +1,21 @@
+= Chapter04 - Class Methods and Fields
+
+
+== Simple Design.
+A dica é começar o design de um sistema ou mesmo da classe da forma mais simples possível. Ao invés de gastar um tempo maior no início fazendo o design o ideal é utilizar "baby's steps" e ir refatorando o projeto conforme a compreensão do sistema for aumentando. Algumas dicas:
+  * Tenha certeza que os testes estão funcionando 100%;
+  * Elimine as duplicações;
+  * Tenha certeza que o código está limpo e expressivo;
+  * Minimize o número de métodos e classes;
+
+=== Jefferson.
+Concordo com essa abordagem, porém *NÃO* descarto uma análise prévia das classes necessárias que irão interagir no sistema e suas principais ações. Apesar da extrema valorização das técnicas agéis pela prática, acredito que seja mais saudável um *pequeno* planejamento inicial (realmente pequeno, por favor! Nada de horas discutindo funcionalidades que certamente não iremos implementar ou que não serão utilizadas!!). Muitas vezes, me sinto perdido em um sistema sem um diagrama simples do DB ou das classes só pra entender os personagens do sitema e a forma como eles se relacionam. Com essa visão inicial fica mais simples entender um código legado ou projetar uma versão bem simples do sistema para testar o conceito/gerar um protótipo.
+
+
+== Jeff's (Author) Rule of Statics.
+Não use statics até você saber que irá precisar deles;
+
+==  Test as Documentation.
+Como dica geral de testes: testar contra 0, 1, muito, qualquer *limite* e casos excepcionais. TDD é diferente de testes pois o objetivo do TDD não é garantir 100% de corretude mas sim gerar uma *confiança* que o código faz o que se propõe.
+TDD, com a prática, leva o desenvolvedor a discenir o que é necessário testar e o quanto dedicar-se a isso.
+Também é interessante assumir como documentação do projeto os testes. Caso um outro desenvolvedor leia os testes, será ele capaz de entender as regras de negócios.

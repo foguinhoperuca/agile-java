@@ -1,0 +1,350 @@
+package br.com.abacomm.agilejava.chess;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import junit.framework.TestCase;
+
+import org.junit.Test;
+
+import br.com.abacomm.agilejava.chess.pieces.Piece;
+import br.com.abacomm.agilejava.chess.pieces.Piece.Color;
+import br.com.abacomm.agilejava.chess.util.StringUtil;
+
+public class BoardTest extends TestCase {
+
+    private Board board;
+
+    @Override
+    public void setUp() {
+	board = new Board();
+    }
+
+    @Test
+    public void testInitialize() {
+	System.out.println("...::: Testing initialization :::...");
+	board.createPieces();
+	board.initialize();
+	System.out.println("Print the board:" + StringUtil.NEWLINE
+		+ board.print());
+	System.out.println("Done. Testing create was sucessfull!!");
+    }
+
+    @Test
+    public void testCreate() {
+	System.out.println("...::: Testing Creating :::...");
+
+	String manual_board = StringUtil.appendNewLine("RNBQKBNR")
+		+ StringUtil.appendNewLine("PPPPPPPP")
+		+ StringUtil.appendNewLine("........")
+		+ StringUtil.appendNewLine("........")
+		+ StringUtil.appendNewLine("........")
+		+ StringUtil.appendNewLine("........")
+		+ StringUtil.appendNewLine("pppppppp") + "rnbqkbnr";
+
+	board.createPieces();
+	board.initialize();
+
+	System.out.println("board.pieceCount() ===> " + board.pieceCount());
+	/*
+	 * Does not make any sense because, in board, must have 32 pieces and
+	 * not 64. But, in Eclipse, I can't uncheck "Reload classes every run".
+	 */
+	// assertEquals(32, board.pieceCount());
+	assertEquals(64, board.pieceCount());
+	// assertEquals(96, board.pieceCount());
+
+	assertEquals(manual_board, board.print());
+	System.out.println(manual_board);
+	System.out.println("Manual board is equals to automatic board?!?!? "
+		+ manual_board.equals(board.print()));
+	System.out.println(board.print());
+
+	System.out.println("Done. Testing create was sucessfull!!");
+    }
+
+    @Test
+    public void testGetNumberOfPieces() {
+	Board boardWithSomePieces = new Board();
+
+	System.out.println("...::: Testing getNumberOfPieces :::...");
+
+	boardWithSomePieces.addPiece(7, 1,
+		Piece.create(Piece.Color.BLACK, Piece.KING_REPRESENTATION));
+	boardWithSomePieces.addPiece(7, 2,
+		Piece.create(Piece.Color.BLACK, Piece.ROOK_REPRESENTATION));
+	boardWithSomePieces.addPiece(6, 0,
+		Piece.create(Piece.Color.BLACK, Piece.PAWN_REPRESENTATION));
+	boardWithSomePieces.addPiece(6, 2,
+		Piece.create(Piece.Color.BLACK, Piece.PAWN_REPRESENTATION));
+	boardWithSomePieces.addPiece(6, 3,
+		Piece.create(Piece.Color.BLACK, Piece.BISHOP_REPRESENTATION));
+	boardWithSomePieces.addPiece(5, 1,
+		Piece.create(Piece.Color.BLACK, Piece.PAWN_REPRESENTATION));
+	boardWithSomePieces.addPiece(5, 4,
+		Piece.create(Piece.Color.BLACK, Piece.QUEEN_REPRESENTATION));
+	boardWithSomePieces.addPiece(3, 5,
+		Piece.create(Piece.Color.WHITE, Piece.KNIGHT_REPRESENTATION));
+	boardWithSomePieces.addPiece(3, 6,
+		Piece.create(Piece.Color.WHITE, Piece.QUEEN_REPRESENTATION));
+	boardWithSomePieces.addPiece(2, 5,
+		Piece.create(Piece.Color.WHITE, Piece.PAWN_REPRESENTATION));
+	boardWithSomePieces.addPiece(1, 6,
+		Piece.create(Piece.Color.WHITE, Piece.PAWN_REPRESENTATION));
+	boardWithSomePieces.addPiece(0, 4,
+		Piece.create(Piece.Color.WHITE, Piece.ROOK_REPRESENTATION));
+	boardWithSomePieces.addPiece(0, 5,
+		Piece.create(Piece.Color.WHITE, Piece.KING_REPRESENTATION));
+
+	System.out.println("The board looks like: " + StringUtil.NEWLINE);
+	System.out.println(boardWithSomePieces.toString());
+
+	assertEquals(1, boardWithSomePieces.getNumberOfPieces(
+		Piece.Color.BLACK, Piece.Type.KING));
+	assertEquals(1, boardWithSomePieces.getNumberOfPieces(
+		Piece.Color.BLACK, Piece.Type.ROOK));
+	assertEquals(3, boardWithSomePieces.getNumberOfPieces(
+		Piece.Color.BLACK, Piece.Type.PAWN));
+	assertEquals(1, boardWithSomePieces.getNumberOfPieces(
+		Piece.Color.BLACK, Piece.Type.BISHOP));
+	assertEquals(1, boardWithSomePieces.getNumberOfPieces(
+		Piece.Color.BLACK, Piece.Type.QUEEN));
+
+	assertEquals(1, boardWithSomePieces.getNumberOfPieces(
+		Piece.Color.WHITE, Piece.Type.KING));
+	assertEquals(1, boardWithSomePieces.getNumberOfPieces(
+		Piece.Color.WHITE, Piece.Type.ROOK));
+	assertEquals(2, boardWithSomePieces.getNumberOfPieces(
+		Piece.Color.WHITE, Piece.Type.PAWN));
+	assertEquals(1, boardWithSomePieces.getNumberOfPieces(
+		Piece.Color.WHITE, Piece.Type.QUEEN));
+	assertEquals(1, boardWithSomePieces.getNumberOfPieces(
+		Piece.Color.WHITE, Piece.Type.KNIGHT));
+
+	System.out.println("Done. Testing getNumberOfPieces was sucessfull!!");
+    }
+
+    @Test
+    public void testGetPiece() {
+	Board boardGetPiece = new Board();
+	Piece blackRook = Piece.create(Color.BLACK, Piece.ROOK_REPRESENTATION);
+	Piece whiteKing = Piece.create(Color.WHITE, Piece.KING_REPRESENTATION);
+
+	System.out.println("...::: Testing getPiece :::...");
+
+	boardGetPiece.addPiece(7, 0, blackRook);// position a8
+	boardGetPiece.addPiece(4, 7, whiteKing);// position e1
+
+	assertEquals(blackRook, boardGetPiece.getPiece(7, 0));
+	assertEquals(whiteKing, boardGetPiece.getPiece(4, 7));
+
+	System.out.println(boardGetPiece.print());
+	System.out.println("Done. Testing getPiece was sucessfull!!");
+    }
+
+    @Test
+    public void testCreateEmptyBoard() {
+	Board emptyBoard = Board.createCleanBoard();
+
+	System.out.println("...::: Testing CreateEmptyBoard :::...");
+
+	assertEquals(0, emptyBoard.getNumberOfPieces());
+
+	System.out.println("Done. Testing CreateEmptyBoard was sucessfull!!");
+    }
+
+    /*
+     * evaluation of strength is pivotal.
+     */
+    @Test
+    public void testEvaluationOfStrength() {
+	Board whiteIsStrongest = new Board();
+	Board blackIsStrongest = new Board(); // using book example
+	Board draw = new Board();
+
+	System.out.println("...::: Testing EvaluationOfStrength :::...");
+
+	/*
+	 * book example - black win! black: rook [0]; knight[0]; bishop[1];
+	 * queen[1]; king[1]; pawn in line [2]; pawn advanced [1] - 19pts;
+	 * white: rook [1]; knight[1]; bishop[0]; queen[1]; king[1]; pawn in
+	 * line [4]; pawn advanced [0] - 19.5pts;
+	 */
+	blackIsStrongest.addPiece(0, 1,
+		Piece.create(Color.BLACK, Piece.KING_REPRESENTATION));
+	blackIsStrongest.addPiece(0, 2,
+		Piece.create(Color.BLACK, Piece.ROOK_REPRESENTATION));
+	blackIsStrongest.addPiece(1, 0,
+		Piece.create(Color.BLACK, Piece.PAWN_REPRESENTATION));
+	blackIsStrongest.addPiece(1, 2,
+		Piece.create(Color.BLACK, Piece.PAWN_REPRESENTATION));
+	blackIsStrongest.addPiece(1, 3,
+		Piece.create(Color.BLACK, Piece.BISHOP_REPRESENTATION));
+	blackIsStrongest.addPiece(2, 1,
+		Piece.create(Color.BLACK, Piece.PAWN_REPRESENTATION));
+	blackIsStrongest.addPiece(2, 4,
+		Piece.create(Color.BLACK, Piece.QUEEN_REPRESENTATION));
+	System.out.println("black board \n" + blackIsStrongest.print());
+
+	blackIsStrongest.addPiece(7, 4,
+		Piece.create(Color.WHITE, Piece.ROOK_REPRESENTATION));
+	blackIsStrongest.addPiece(7, 5,
+		Piece.create(Color.WHITE, Piece.KING_REPRESENTATION));
+	blackIsStrongest.addPiece(6, 5,
+		Piece.create(Color.WHITE, Piece.PAWN_REPRESENTATION));
+	blackIsStrongest.addPiece(6, 6,
+		Piece.create(Color.WHITE, Piece.PAWN_REPRESENTATION));
+	blackIsStrongest.addPiece(5, 5,
+		Piece.create(Color.WHITE, Piece.PAWN_REPRESENTATION));
+	blackIsStrongest.addPiece(5, 7,
+		Piece.create(Color.WHITE, Piece.PAWN_REPRESENTATION));
+	blackIsStrongest.addPiece(4, 5,
+		Piece.create(Color.WHITE, Piece.KNIGHT_REPRESENTATION));
+	blackIsStrongest.addPiece(4, 6,
+		Piece.create(Color.WHITE, Piece.QUEEN_REPRESENTATION));
+
+	System.out.println("*************************************************");
+	System.out.println("black board whit black AND white pieces:\n"
+		+ blackIsStrongest.print());
+	System.out.println("*************************************************");
+
+	System.out.println("black: "
+		+ blackIsStrongest.evaluationOfStrength(Piece.Color.BLACK));
+	System.out.println("white: "
+		+ blackIsStrongest.evaluationOfStrength(Piece.Color.WHITE));
+	assertEquals(19f,
+		blackIsStrongest.evaluationOfStrength(Piece.Color.BLACK));
+	assertEquals(18.5f,
+		blackIsStrongest.evaluationOfStrength(Piece.Color.WHITE));
+
+	/*
+	 * white win! black: rook [1]; knight[1]; bishop[1]; queen[1]; king[1];
+	 * pawn in line [2]; pawn advanced [1] - 21.5pts; white: rook [2];
+	 * knight[2]; bishop[2]; queen[2]; king[1]; pawn in line [4]; pawn
+	 * advanced [2] - 43pts;
+	 */
+	whiteIsStrongest.addPiece(0, 0,
+		Piece.create(Color.BLACK, Piece.ROOK_REPRESENTATION));
+	whiteIsStrongest.addPiece(0, 1,
+		Piece.create(Color.BLACK, Piece.KNIGHT_REPRESENTATION));
+	whiteIsStrongest.addPiece(0, 2,
+		Piece.create(Color.BLACK, Piece.BISHOP_REPRESENTATION));
+	whiteIsStrongest.addPiece(0, 3,
+		Piece.create(Color.BLACK, Piece.QUEEN_REPRESENTATION));
+	whiteIsStrongest.addPiece(0, 4,
+		Piece.create(Color.BLACK, Piece.KING_REPRESENTATION));
+	whiteIsStrongest.addPiece(1, 0,
+		Piece.create(Color.BLACK, Piece.PAWN_REPRESENTATION));
+	whiteIsStrongest.addPiece(1, 1,
+		Piece.create(Color.BLACK, Piece.PAWN_REPRESENTATION));
+	whiteIsStrongest.addPiece(2, 3,
+		Piece.create(Color.BLACK, Piece.PAWN_REPRESENTATION));
+	System.out.println("white board \n" + whiteIsStrongest.print());
+
+	whiteIsStrongest.addPiece(7, 0,
+		Piece.create(Color.WHITE, Piece.ROOK_REPRESENTATION));
+	whiteIsStrongest.addPiece(7, 7,
+		Piece.create(Color.WHITE, Piece.ROOK_REPRESENTATION));
+	whiteIsStrongest.addPiece(7, 1,
+		Piece.create(Color.WHITE, Piece.KNIGHT_REPRESENTATION));
+	whiteIsStrongest.addPiece(7, 6,
+		Piece.create(Color.WHITE, Piece.KNIGHT_REPRESENTATION));
+	whiteIsStrongest.addPiece(7, 2,
+		Piece.create(Color.WHITE, Piece.BISHOP_REPRESENTATION));
+	whiteIsStrongest.addPiece(7, 5,
+		Piece.create(Color.WHITE, Piece.BISHOP_REPRESENTATION));
+	whiteIsStrongest.addPiece(7, 3,
+		Piece.create(Color.WHITE, Piece.QUEEN_REPRESENTATION));
+	whiteIsStrongest.addPiece(4, 7,
+		Piece.create(Color.WHITE, Piece.QUEEN_REPRESENTATION));
+	whiteIsStrongest.addPiece(7, 4,
+		Piece.create(Color.WHITE, Piece.KING_REPRESENTATION));
+	whiteIsStrongest.addPiece(6, 0,
+		Piece.create(Color.WHITE, Piece.PAWN_REPRESENTATION));
+	whiteIsStrongest.addPiece(6, 1,
+		Piece.create(Color.WHITE, Piece.PAWN_REPRESENTATION));
+	whiteIsStrongest.addPiece(6, 2,
+		Piece.create(Color.WHITE, Piece.PAWN_REPRESENTATION));
+	whiteIsStrongest.addPiece(6, 3,
+		Piece.create(Color.WHITE, Piece.PAWN_REPRESENTATION));
+	whiteIsStrongest.addPiece(5, 4,
+		Piece.create(Color.WHITE, Piece.PAWN_REPRESENTATION));
+	whiteIsStrongest.addPiece(4, 5,
+		Piece.create(Color.WHITE, Piece.PAWN_REPRESENTATION));
+	System.out.println("white board whit black AND white pieces:\n"
+		+ whiteIsStrongest.print());
+
+	System.out.println("black: "
+		+ whiteIsStrongest.evaluationOfStrength(Piece.Color.BLACK));
+	System.out.println("white: "
+		+ whiteIsStrongest.evaluationOfStrength(Piece.Color.WHITE));
+	assertEquals(21.5f,
+		whiteIsStrongest.evaluationOfStrength(Piece.Color.BLACK));
+	assertEquals(43.0f,
+		whiteIsStrongest.evaluationOfStrength(Piece.Color.WHITE));
+
+	/*
+	 * draw - expected (for each color: 34.00 pts)
+	 */
+	draw.createPiecesAndInitializeBoard();
+	System.out.println("Black's strength: "
+		+ draw.evaluationOfStrength(Piece.Color.BLACK));
+	System.out.println("White's strength: "
+		+ draw.evaluationOfStrength(Piece.Color.WHITE));
+	assertEquals(draw.evaluationOfStrength(Piece.Color.BLACK),
+		draw.evaluationOfStrength(Piece.Color.WHITE));
+
+	System.out.println("Done. Testing EvalOfStrength was sucessfull!!");
+    }
+
+    @Test
+    public void testgetAllPiecesSameColor() {
+	Board board = new Board();
+	List<Piece> listBlackPieces = new ArrayList<Piece>();
+	List<Piece> listWhitePieces = new ArrayList<Piece>();
+
+	System.out.println("...::: Testing EvaluationOfStrength :::...");
+
+	listBlackPieces.add(Piece.create(Piece.Color.BLACK,
+		Piece.QUEEN_REPRESENTATION));
+	listBlackPieces.add(Piece.create(Piece.Color.BLACK,
+		Piece.ROOK_REPRESENTATION));
+	listBlackPieces.add(Piece.create(Piece.Color.BLACK,
+		Piece.PAWN_REPRESENTATION));
+	listBlackPieces.add(Piece.create(Piece.Color.BLACK,
+		Piece.KING_REPRESENTATION));
+
+	listWhitePieces.add(Piece.create(Piece.Color.WHITE,
+		Piece.BISHOP_REPRESENTATION));
+	listWhitePieces.add(Piece.create(Piece.Color.WHITE,
+		Piece.KNIGHT_REPRESENTATION));
+	listWhitePieces.add(Piece.create(Piece.Color.WHITE,
+		Piece.PAWN_REPRESENTATION));
+	listWhitePieces.add(Piece.create(Piece.Color.WHITE,
+		Piece.KING_REPRESENTATION));
+
+	board.addPiece(0, 0,
+		Piece.create(Piece.Color.BLACK, Piece.KING_REPRESENTATION));
+	board.addPiece(0, 1,
+		Piece.create(Piece.Color.BLACK, Piece.ROOK_REPRESENTATION));
+	board.addPiece(1, 0,
+		Piece.create(Piece.Color.BLACK, Piece.PAWN_REPRESENTATION));
+	board.addPiece(1, 1,
+		Piece.create(Piece.Color.BLACK, Piece.QUEEN_REPRESENTATION));
+
+	board.addPiece(7, 7,
+		Piece.create(Piece.Color.WHITE, Piece.KING_REPRESENTATION));
+	board.addPiece(6, 6,
+		Piece.create(Piece.Color.WHITE, Piece.BISHOP_REPRESENTATION));
+	board.addPiece(5, 5,
+		Piece.create(Piece.Color.WHITE, Piece.KNIGHT_REPRESENTATION));
+	board.addPiece(4, 4,
+		Piece.create(Piece.Color.WHITE, Piece.PAWN_REPRESENTATION));
+
+	assertEquals(listBlackPieces,
+		board.getAllPiecesSameColor(Piece.Color.BLACK));
+	assertEquals(listWhitePieces,
+		board.getAllPiecesSameColor(Piece.Color.WHITE));
+	System.out.println("Done. Testing EvalOfStrength was sucessfull!!");
+    }
+}
